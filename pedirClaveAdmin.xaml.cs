@@ -23,20 +23,21 @@ namespace proyectUniversidad
         public pedirClaveAdmin()
         {
             InitializeComponent();
-            miClave = "admin1234";
+            miClave = "1234";
         }
 
         private void btnClaveAceptar_Click(object sender, RoutedEventArgs e)
         {
             string claveIngresada = claveAdminTxt.Password.ToString();
-            MessageBox.Show(claveIngresada);
 
             if(claveIngresada == miClave)
             {
                 PanelAdministrador panelAdministrador = new PanelAdministrador();
+                this.Close();
                 panelAdministrador.Show();
             }
             else MessageBox.Show("Clave incorrecta\nIntentelo de nuevo o pulse cancelar.");
+            claveAdminTxt.Password = "";
         }
 
         private void btnClaveCancelar_Click(object sender, RoutedEventArgs e)

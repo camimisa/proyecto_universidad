@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:proyectUniversidad"
         mc:Ignorable="d"
-        Title="PanelAdministrador" Height="450" Width="800">
+        Title="Administrar Unla" Height="450" Width="918.5">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!--DEPARTAMENTOS-->
+        <Grid Grid.Row="0">
+            <TextBlock HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" TextWrapping="Wrap" Text="Departamentos de la UNLA. " VerticalAlignment="Top" Width="235" FontFamily="Century Gothic" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Height="31" Margin="10,34,0,0" TextWrapping="Wrap" Text="Seleccione un Departamento para ver sus carreras." VerticalAlignment="Top" Width="271" FontFamily="Century Gothic" FontSize="13"/>
+            <ComboBox Name="comboBoxDptosAdmin" FontFamily="Century Gothic" FontSize="12" HorizontalAlignment="Left" Height="23" Margin="10,71,0,0" VerticalAlignment="Top" Width="271" SelectionChanged="comboBoxDptosAdmin_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+        </Grid>
+        <!--CARRERAS-->
+        <Grid Grid.Column="1" Visibility="Hidden" Name="gridCarrerasAdmin">
+            <TextBlock HorizontalAlignment="Left" Height="27" Margin="0,12,0,0" TextWrapping="Wrap" Text="Carreras del Dpto Elegido" VerticalAlignment="Top" Width="208" FontFamily="Century Gothic" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Height="25" Margin="0,37,0,0" TextWrapping="Wrap" Text="Seleccione una carrera para ver sus materias." VerticalAlignment="Top" Width="294" FontFamily="Century Gothic" FontSize="13"/>
+            <ComboBox Name="comboBoxCarrerasAdmin" HorizontalAlignment="Left" Height="23" Margin="4,70,0,0" VerticalAlignment="Top" Width="284" SelectionChanged="comboBoxCarrerasAdmin_SelectionChanged" FontFamily="Century Gothic" FontSize="12">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        <!--MATERIAS O ALUMNOS-->
+        <Grid Grid.Column="2" Visibility="Hidden" Name="gridEleccionAlumnosMateria">
+            <TextBlock HorizontalAlignment="Left" Height="52" Margin="10,10,0,0" TextWrapping="Wrap" Text="Elige si quiere ver los Alumnos Inscriptos o las materias de la carrera." VerticalAlignment="Top" Width="261" FontFamily="Century Gothic" FontSize="14"/>
+            <ComboBox  FontFamily="Century Gothic" FontSize="12" Name="comboBoxEleccionAlumnosMateriasAdmin" HorizontalAlignment="Left" Height="23" Margin="10,70,0,0" VerticalAlignment="Top" Width="283" SelectionChanged="comboBoxEleccionAlumnosMateriasAdmin_SelectionChanged">
+                <ComboBoxItem Content="Alumnos"></ComboBoxItem>
+                <ComboBoxItem Content="Materias"></ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" Name="gridOpcion">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="110"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Name="gridEditorDatos" Visibility="Visible">
+                <Label Content="Nombre:" HorizontalAlignment="Left" Height="36" Margin="21,38,0,0" VerticalAlignment="Top" Width="102" FontFamily="Century Gothic" FontSize="14"/>
+                <TextBlock Text="Donde estas agregando:" TextWrapping="Wrap" HorizontalAlignment="Left" Height="36" Margin="21,84,0,0" VerticalAlignment="Top" Width="102" FontFamily="Century Gothic" FontSize="14" RenderTransformOrigin="1.341,0.639"/>
+                <TextBox Name="txtNombreAdmin" HorizontalAlignment="Left" Height="32" Margin="108,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" FontFamily="Century Gothic" FontSize="14" KeyDown="txtNombreAdmin_KeyDown"/>
+
+                <Button Name="btnAdminAgregar" Content="Agregar" HorizontalAlignment="Left" Height="25" Margin="21,156,0,0" VerticalAlignment="Top" Width="65" FontFamily="Century Gothic" RenderTransformOrigin="0.492,0.2" Click="btnAdminAgregar_Click"/>
+                <Button Name="btnAdminEliminar" Content="Eliminar" HorizontalAlignment="Left" Height="25" Margin="228,156,0,0" VerticalAlignment="Top" Width="65" FontFamily="Century Gothic" Click="btnAdminEliminar_Click"/>
+                <Button Name="btnAdminActualizar" Content="Actualizar" HorizontalAlignment="Left" Height="25" Margin="124,156,0,0" VerticalAlignment="Top" Width="65" FontFamily="Century Gothic" Click="btnAdminActualizar_Click"/>
+                <TextBlock Name="txtDondeAgrego" HorizontalAlignment="Center" Height="67" Margin="108,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Century Gothic" Width="165"/>
+            </Grid>
+            <Grid Grid.Row="1" Name="gridOpcionesAlumno" Visibility="Hidden">
+                <TextBlock HorizontalAlignment="Left" Height="62" Margin="10,16,0,0" TextWrapping="Wrap" Text="Haga click para Agregar un alumno a la carrera Seleccionada:" VerticalAlignment="Top" Width="150" FontFamily="Century Gothic" FontSize="13"/>
+                <Button Name="btnInscribirse" IsEnabled="false" Content="Inscribir" HorizontalAlignment="Left" Height="25" Margin="180,16,0,0" VerticalAlignment="Top" Width="83" FontFamily="Century Gothic" Click="btnInscribirse_Click"/>
+                <Button Name="btnSalir" Content="Salir" HorizontalAlignment="Left" Height="25" Margin="180,53,0,0" VerticalAlignment="Top" Width="83" FontFamily="Century Gothic" Click="btnSalir_Click" RenderTransformOrigin="-2.012,5.16"/>
+            </Grid>
+        </Grid>
+        <!-- DATA GRID -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+
+            <DataGrid Name="dataGridInfo" SelectionChanged="DataGrid_SelectionChanged" Margin="0,28,0,0">
+
+            </DataGrid>
+            <Button Name="btnMostrarAdmin" Content="M o s t r a r" HorizontalAlignment="Left" Height="18" Margin="23,10,0,0" VerticalAlignment="Top" Width="557" Click="btnMostrarAdmin_Click" FontFamily="Century Gothic"/>
+
+        </Grid>
+
     </Grid>
+
 </Window>

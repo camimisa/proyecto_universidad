@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:proyectUniversidad"
         mc:Ignorable="d"
         Title="UNLA" Height="300.857" Width="429.714">
-    <Grid>
+    <Grid Background="#bab3b2">
+        <Border BorderBrush="Black" Background="White" BorderThickness="1" HorizontalAlignment="Left" Height="51" Margin="89,22,0,0" VerticalAlignment="Top" Width="217"/>
         <TextBlock Text="Bienvenido" Margin="99,22,81,177" FontFamily="Century Gothic" FontSize="36"/>
-        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Margin="32,93,0,79" Text="Universidad Nacional De Lanus"  Width="140" FontFamily="Century Gothic" FontSize="24"/>
-        <Button Name="btnVisitante" Content="Visitante" HorizontalAlignment="Left" Height="38" Margin="61,208,0,0" VerticalAlignment="Top" Width="130" FontFamily="Century Gothic" FontSize="20" Click="btnVisitante_Click"/>
+        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Margin="89,93,0,79" Text="Universidad Nacional De Lanus"  Width="140" FontFamily="Century Gothic" FontSize="24"/>
+        <Image Source="Imagenes/unla_icon.jpg" Margin="234,87,81,79"></Image>
+        <Button  Name="btnVisitante" Content="Visitante" HorizontalAlignment="Left" Height="38" Margin="61,208,0,0" VerticalAlignment="Top" Width="130" FontFamily="Century Gothic" FontSize="20" Click="btnVisitante_Click"/>
         <Button Name="btnAdministrador" Content="Administrador" HorizontalAlignment="Left" Height="38" Margin="234,208,0,0" VerticalAlignment="Top" Width="149" FontFamily="Century Gothic" FontSize="20" Click="btnAdministrador_Click"/>
+        
     </Grid>
 </Window>

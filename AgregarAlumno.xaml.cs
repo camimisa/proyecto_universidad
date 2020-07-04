@@ -20,11 +20,23 @@ namespace proyectUniversidad
     public partial class AgregarAlumno : Window
     {
         public int Id_carrera_windowAlumno { get; set; }
+        public Alumno MiAlumno { get; set; }
+        public bool Actualizar { get; set; }//Esta variable se utilizara para saber si es necesario actualizar o agregar al alumno
+
         public AgregarAlumno()
-        {
+        { 
             InitializeComponent();
         }
+        private void ActualizarAlumno()
+        {
+            if (!Actualizar) return;
+            txtDniAlumno.Text = MiAlumno.Dni.ToString();
+            txtNombreAlumno.Text = MiAlumno.Nombre;
+            txtApellidoAlumno.Text = MiAlumno.Apellido;
+            comboBoxGenero.SelectedItem = MiAlumno.Genero;
+            fechaNacimientoCalendario.SelectedDate = MiAlumno.FechaNacimiento;
 
+        }
         private void CargarNuevoAlumno()
         {
             Alumno alumno = new Alumno
@@ -37,7 +49,10 @@ namespace proyectUniversidad
                 Id_carrera = Id_carrera_windowAlumno,
             };
             ManejoDeDatos manejoDeDatos = new ManejoDeDatos();
-            manejoDeDatos.InsertarAlumno(alumno);
+            if (!Actualizar)
+                manejoDeDatos.InsertarAlumno(alumno);
+           // else
+               // manejoDeDatos.ActualizarAlumno(alumno);
         }
 
         private void btnAgregarAlumno_Click(object sender, RoutedEventArgs e)
@@ -50,6 +65,11 @@ namespace proyectUniversidad
         private void btnCancelarAlumno_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Grid_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ActualizarAlumno();
         }
     }
 }

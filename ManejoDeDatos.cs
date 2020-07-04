@@ -156,11 +156,6 @@ namespace proyectUniversidad
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read() == false)
-                {
-                    MessageBox.Show("Todavia no han sido cargadas las materias de esta carrera.\nDisculpas por las molestias ocasionadas.\nIgualmente puede inscribirse en la carrera.");
-                }
-               
                 while (reader.Read())
                 {
                     listaMaterias.Add(new Materia
@@ -220,13 +215,13 @@ namespace proyectUniversidad
             }
         }
 
-        public List<Alumno> GetAlumnos()
+        public List<Alumno> GetAlumnos(int idCarrera)
         {
             List<Alumno> listaAlumnos = new List<Alumno>();
             try
             {
                 connection.Open();
-                string query = "SELECT * FROM ALUMNOS";
+                string query = "SELECT * FROM ALUMNOS INNER JOIN CARRERAS ON CARRERAS.id = ALUMNOS.id_carrera where id_carrera=" + idCarrera;
 
                 SqlCommand command = new SqlCommand(query, connection);
 

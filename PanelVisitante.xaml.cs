@@ -54,6 +54,9 @@ namespace proyectUniversidad
         {
             manejoDeDatos = new ManejoDeDatos();
             List<Materia> materias = manejoDeDatos.GetMaterias(id_carrera);
+            if(materias==null) 
+              MessageBox.Show("Todavia no han sido cargadas las materias de esta carrera.\nDisculpas por las molestias ocasionadas.\nIgualmente puede inscribirse en la carrera.");
+            else
             comboBoxMaterias.ItemsSource = materias;
         }
 
@@ -61,6 +64,7 @@ namespace proyectUniversidad
         {   
             id_dpto = (comboBoxDptos.SelectedIndex)+1;
             controlCambiosCarrera = 0;
+            comboBoxMaterias.ItemsSource = null;
             ComboBoxCarreras();
             gridCarreras.Visibility = Visibility.Visible;
             
@@ -70,8 +74,6 @@ namespace proyectUniversidad
         {
             gridMaterias.Visibility = Visibility.Visible;
             gridOpcion.Visibility = Visibility.Visible;
-            //Obtener id y llamar a comboBoxMaterias
-            //Necesito obtener el id de la carrera para poder pasarselo a la materia pero no me sale:(
             //Si es uno es porque ya se cargaron las carreras. Si es 0 es porque se acaba de cambiar el dpto
             if (controlCambiosCarrera == 1) { 
             int numCarrera = comboBoxCarreras.SelectedIndex;
