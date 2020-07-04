@@ -1,0 +1,61 @@
+﻿<Window x:Class="proyectUniversidad.PanelVisitante"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyectUniversidad"
+        mc:Ignorable="d"
+        Title="Info Unla" Height="450" Width="515.265">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock HorizontalAlignment="Left" Height="42" Margin="30,10,0,0" TextWrapping="Wrap" Text="Departamentos de la UNLA. " VerticalAlignment="Top" Width="429" FontFamily="Century Gothic" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Height="26" Margin="30,39,0,0" TextWrapping="Wrap" Text="Seleccione un Departamento para ver sus carreras." VerticalAlignment="Top" Width="429" FontFamily="Century Gothic" FontSize="13"/>
+            <ComboBox Name="comboBoxDptos" HorizontalAlignment="Left" Height="23" Margin="30,65,0,0" VerticalAlignment="Top" Width="401" SelectionChanged="comboBoxDptos_SelectionChanged"  >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}" FontFamily="Century Gothic" FontSize="14"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1" Visibility="Hidden" Name="gridCarreras">
+            <TextBlock HorizontalAlignment="Left" Height="27" Margin="30,15,0,0" TextWrapping="Wrap" Text="Carreras del Dpto Elegido" VerticalAlignment="Top" Width="429" FontFamily="Century Gothic" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Height="25" Margin="30,42,0,0" TextWrapping="Wrap" Text="Seleccione una carrera para ver sus materias." VerticalAlignment="Top" Width="429" FontFamily="Century Gothic" FontSize="13"/>
+            <ComboBox Name="comboBoxCarreras" HorizontalAlignment="Left" Height="23" Margin="30,67,0,0" VerticalAlignment="Top" Width="401" SelectionChanged="comboBoxCarreras_SelectionChanged" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}"  FontFamily="Century Gothic" FontSize="14"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="2" Visibility="Hidden" Name="gridMaterias">
+            <TextBlock HorizontalAlignment="Left" Height="27" Margin="30,25,0,0" TextWrapping="Wrap" Text="Materias de la Carrera Elegida" VerticalAlignment="Top" Width="429" FontFamily="Century Gothic" FontSize="16"/>
+            <ComboBox  Name="comboBoxMaterias" HorizontalAlignment="Left" Height="23" Margin="30,57,0,0" VerticalAlignment="Top" Width="401">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nombre}" FontFamily="Century Gothic" FontSize="14"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="3" Name="gridOpcion" Visibility="Hidden">
+            <TextBlock HorizontalAlignment="Left" Height="41" Margin="10,19,0,0" TextWrapping="Wrap" Text="Haga click para Inscribirse en la carrera seleccionada:" VerticalAlignment="Top" Width="206" FontFamily="Century Gothic" FontSize="13"/>
+            <Button Name="btnInscribirse" Content="Inscribirse" HorizontalAlignment="Left" Height="25" Margin="237,28,0,0" VerticalAlignment="Top" Width="112" FontFamily="Century Gothic" Click="btnInscribirse_Click"/>
+            <Button Name="btnSalir" Content="Salir" HorizontalAlignment="Left" Height="25" Margin="372,28,0,0" VerticalAlignment="Top" Width="83" FontFamily="Century Gothic" Click="btnSalir_Click"/>
+        </Grid>
+    </Grid>
+</Window>

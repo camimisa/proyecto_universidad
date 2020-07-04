@@ -1,0 +1,15 @@
+﻿<Window x:Class="proyectUniversidad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyectUniversidad"
+        mc:Ignorable="d"
+        Title="UNLA" Height="300.857" Width="429.714">
+    <Grid>
+        <TextBlock Text="Bienvenido" Margin="99,22,81,177" FontFamily="Century Gothic" FontSize="36"/>
+        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" Margin="32,93,0,79" Text="Universidad Nacional De Lanus"  Width="140" FontFamily="Century Gothic" FontSize="24"/>
+        <Button Name="btnVisitante" Content="Visitante" HorizontalAlignment="Left" Height="38" Margin="61,208,0,0" VerticalAlignment="Top" Width="130" FontFamily="Century Gothic" FontSize="20" Click="btnVisitante_Click"/>
+        <Button Name="btnAdministrador" Content="Administrador" HorizontalAlignment="Left" Height="38" Margin="234,208,0,0" VerticalAlignment="Top" Width="149" FontFamily="Century Gothic" FontSize="20" Click="btnAdministrador_Click"/>
+    </Grid>
+</Window>
