@@ -51,14 +51,13 @@ namespace proyectUniversidad
             ManejoDeDatos manejoDeDatos = new ManejoDeDatos();
             if (!Actualizar)
                 manejoDeDatos.InsertarAlumno(alumno);
-           // else
-               // manejoDeDatos.ActualizarAlumno(alumno);
+            else
+               manejoDeDatos.ActualizarAlumno(alumno);
         }
 
         private void btnAgregarAlumno_Click(object sender, RoutedEventArgs e)
         {
             CargarNuevoAlumno();
-            MessageBox.Show("Agregado Correctamente");
             this.Close();
         }
 

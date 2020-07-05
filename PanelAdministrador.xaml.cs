@@ -27,6 +27,8 @@ namespace proyectUniversidad
 
         int controlCambiosCarrera = 0;
 
+        bool data_grid_vacio;
+
         int elemento_mostrar = 0; // Data Grid 1=Muestro carrera 2=Alumnos 3=Materias
 
         List<Carrera> carreras; //Necesito hacerla global porque necesito obtener su id constantemente
@@ -85,8 +87,12 @@ namespace proyectUniversidad
 
         private void comboBoxCarrerasAdmin_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            btnMostrarAdmin.IsEnabled = false;
             gridEleccionAlumnosMateria.Visibility = Visibility.Visible;
             gridOpcionesAlumno.Visibility = Visibility.Visible;
+            gridEditorDatos.Visibility = Visibility.Visible;
+            dataGridInfo.ItemsSource = null;
+            data_grid_vacio = true;
             //Si es uno es porque ya se cargaron las carreras. Si es 0 es porque se acaba de cambiar el dpto
             if (controlCambiosCarrera == 1)
             {
@@ -94,7 +100,7 @@ namespace proyectUniversidad
                 id_carrera = carreras[numCarrera].Id;
             }
             comboBoxEleccionAlumnosMateriasAdmin.SelectedItem = null;
-            btnInscribirse.IsEnabled = false;
+            DesabilitarTodosLosBotones();
         }
 
         private void comboBoxDptosAdmin_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,65 +111,152 @@ namespace proyectUniversidad
             ComboBoxCarreras();
             gridCarrerasAdmin.Visibility = Visibility.Visible;
             gridEditorDatos.Visibility = Visibility.Visible;
-            btnInscribirse.IsEnabled = false;
+            dataGridInfo.ItemsSource = null;
+            data_grid_vacio = true;
+            btnMostrarAdmin.IsEnabled = true;
+            DesabilitarTodosLosBotones();
         }
 
         private void comboBoxEleccionAlumnosMateriasAdmin_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            elemento_mostrar = (comboBoxEleccionAlumnosMateriasAdmin.SelectedIndex) + 2; // 3=si es alumnos 4=materia
+            dataGridInfo.ItemsSource = null;
+            btnMostrarAdmin.IsEnabled = true;
+            data_grid_vacio = true;
+            elemento_mostrar = (comboBoxEleccionAlumnosMateriasAdmin.SelectedIndex) + 2; // 2=si es alumnos 3=materia
             if (elemento_mostrar == 2) 
             {
                 btnInscribirse.IsEnabled = true;
                 alumnos = manejoDeDatos.GetAlumnos(id_carrera);
+                gridEditorDatos.Visibility = Visibility.Hidden;
             }
             else
+            {
+                gridEditorDatos.Visibility = Visibility.Visible;
                 materias = manejoDeDatos.GetMaterias(id_carrera);
+                DesabilitarTodosLosBotones();
+            }
+                
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (data_grid_vacio) return;
+            var row = dataGridInfo.SelectedItem;
+            switch (elemento_mostrar)
+            {
+                case 1:
+                    Carrera carrera = (Carrera)row;
+                    if (carrera != null) 
+                    { 
+                        txtNombreAdmin.Text = carrera.Nombre;
+                        btnAdminEliminar.IsEnabled = true;
+                        btnAdminActualizar.IsEnabled = true;
+                    }
+                    
+                    break;
+                case 2:
+                    btnEliminarAlumno.IsEnabled = true;
+                    break;
+                case 3: 
+                    Materia materia = (Materia)row;
+                    if (materia != null) 
+                    {
+                       txtNombreAdmin.Text = materia.Nombre; 
+                       btnAdminEliminar.IsEnabled = true;
+                       btnAdminActualizar.IsEnabled = true;
+                    } 
+                    break;
+            }
+            
         }
 
         private void btnMostrarAdmin_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            ActualizarDataGrid();
+        }
+
+        private void ActualizarDataGrid()
+        {
+            data_grid_vacio = true;
             switch (elemento_mostrar)
             {
                 case 1:
                     if (departamentos != null)
+                    {
                         dataGridInfo.ItemsSource = carreras;
+                        data_grid_vacio = false;
+                    }
                     else
                         dataGridInfo.ItemsSource = null;
                     break;
                 case 2:
                     if (carreras != null)
+                    {
                         dataGridInfo.ItemsSource = alumnos;
+                        data_grid_vacio = false;
+                    }
                     else
                         dataGridInfo.ItemsSource = null;
                     break;
                 case 3:
-                    if (alumnos != null)
+                    if (materias != null)
+                    {
                         dataGridInfo.ItemsSource = materias;
+                        data_grid_vacio = false;
+                    }
                     else
                         dataGridInfo.ItemsSource = null;
                     break;
 
             }
         }
-
         private void btnAdminAgregar_Click(object sender, RoutedEventArgs e)
         {
             AgregarDatoAlaBaseDeDatos();
+            ActualizarDataGrid();
         }
 
         private void btnAdminActualizar_Click(object sender, RoutedEventArgs e)
         {
-
+            var row = dataGridInfo.SelectedItem;
+            switch (elemento_mostrar)
+            {
+                case 1:
+                    Carrera carrera = (Carrera)row;
+                    carrera.Nombre = txtNombreAdmin.Text;
+                    manejoDeDatos.ActualizarCarrera(carrera);
+                    break;
+                case 3:
+                    Materia materia = (Materia)row;
+                    materia.Nombre = txtNombreAdmin.Text;
+                    manejoDeDatos.ActualizarMateria(materia);
+                    break;
+            }
+            txtNombreAdmin.Text = "";
+            txtDondeAgrego.Text = "";
+            ActualizarDataGrid();
         }
 
         private void btnAdminEliminar_Click(object sender, RoutedEventArgs e)
         {
-
+            var row = dataGridInfo.SelectedItem;
+            int id;
+            switch (elemento_mostrar)
+            {
+                case 1:
+                    Carrera carrera = (Carrera)row;
+                    id = carrera.Id;
+                    manejoDeDatos.EliminarCarrera(id);
+                    break;
+                case 3:
+                    Materia materia = (Materia)row;
+                    id = materia.Id;
+                    manejoDeDatos.EliminarMateria(id);
+                    break;
+            }
+            txtNombreAdmin.Text = "";
+            txtDondeAgrego.Text = "";
+            ActualizarDataGrid();
         }
 
         private void btnInscribirse_Click(object sender, RoutedEventArgs e)
@@ -199,6 +292,28 @@ namespace proyectUniversidad
                     txtDondeAgrego.Text = "Carrera " + carreras[comboBoxCarrerasAdmin.SelectedIndex].Nombre;
                     break;
             }
+        }
+
+        private void btnEliminarAlumno_Click(object sender, RoutedEventArgs e)
+        {
+            var row = dataGridInfo.SelectedItem;
+            if (row != null && elemento_mostrar == 2)
+            { 
+                Alumno alumno = (Alumno)row;
+                int alumno_id = alumno.Dni;
+                manejoDeDatos.EliminarAlumno(alumno_id);
+            }
+            ActualizarDataGrid();
+        }
+
+        private void DesabilitarTodosLosBotones()
+        {
+            btnAdminActualizar.IsEnabled = false;
+            btnAdminEliminar.IsEnabled = false;
+            btnEliminarAlumno.IsEnabled = false;
+            btnInscribirse.IsEnabled = false;
+            txtNombreAdmin.Text = "";
+            txtDondeAgrego.Text = "";
         }
     }
 }

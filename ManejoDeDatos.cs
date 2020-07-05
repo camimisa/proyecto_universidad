@@ -66,6 +66,7 @@ namespace proyectUniversidad
                 command.Parameters.Add(idDpto);
                 command.Parameters.Add(nombre);
                 command.ExecuteNonQuery();
+                MessageBox.Show("Carrera guardada correctamente!");
             }
             catch (Exception)
             {
@@ -113,6 +114,53 @@ namespace proyectUniversidad
             return listaCarreras;
         }
 
+        public void ActualizarCarrera(Carrera carrera)
+        {
+            try
+            {
+                connection.Open();
+                //string query = string.Format("UPDATE CARRERAS SET nombre={0} WHERE id={1}", carrera.Nombre, carrera.Id);
+                string query = "UPDATE CARRERAS SET nombre=@nombre WHERE id=@id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@nombre", carrera.Nombre);
+                command.Parameters.AddWithValue("@id", carrera.Id);
+                command.ExecuteNonQuery();
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        public void EliminarCarrera(int id)
+        {
+            try
+            {
+                connection.Open();
+
+                string query = @"DELETE FROM CARRERAS WHERE id = @id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Carrera eliminada correctamente!");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
 
         #endregion
 
@@ -131,6 +179,7 @@ namespace proyectUniversidad
                 command.Parameters.Add(idCarrera);
                 command.Parameters.Add(nombre);
                 command.ExecuteNonQuery();
+                MessageBox.Show("Materia guardada correctamente!");
             }
             catch (Exception)
             {
@@ -149,8 +198,7 @@ namespace proyectUniversidad
             try
             {
                 connection.Open();
-                //if (idCarrera == 0) query = "SELECT * FROM MATERIAS";
-                //else 
+               
                 query = "SELECT * FROM MATERIAS INNER JOIN CARRERAS ON CARRERAS.id = MATERIAS.id_carrera where id_carrera=" + idCarrera;
 
                 SqlCommand command = new SqlCommand(query, connection);
@@ -179,6 +227,52 @@ namespace proyectUniversidad
             return listaMaterias;
         }
 
+        public void ActualizarMateria(Materia materia)
+        {
+            try
+            {
+                connection.Open();
+                string query = "UPDATE MATERIAS SET nombre=@nombre WHERE id=@id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@nombre", materia.Nombre);
+                command.Parameters.AddWithValue("@id", materia.Id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        public void EliminarMateria(int id)
+        {
+            try
+            {
+                connection.Open();
+
+                string query = @"DELETE FROM MATERIAS WHERE id = @id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Materia eliminada correctamente!");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         #endregion
 
         #region TABLA ALUMNOS
@@ -204,6 +298,7 @@ namespace proyectUniversidad
                 command.Parameters.Add(fechaNacimiento);
       
                 command.ExecuteNonQuery();
+                MessageBox.Show("Alumno guardado correctamente!");
             }
             catch (Exception)
             {
@@ -252,6 +347,57 @@ namespace proyectUniversidad
             }
             return listaAlumnos;
         }
+
+        public void ActualizarAlumno(Alumno alumno)
+        {
+            try
+            {
+                connection.Open();
+                string query = @"UPDATE ALUMNOS SET nombre=@nombre,apellido=@apellido ,
+                fechaDeNacimiento=@fechaDeNacimiento , genero=@genero WHERE id=@id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@nombre", alumno.Nombre);
+                command.Parameters.AddWithValue("@apellido", alumno.Apellido);
+                command.Parameters.AddWithValue("@fechaDeNacimiento", alumno.FechaNacimiento);
+                command.Parameters.AddWithValue("@genero", alumno.Genero);
+                command.Parameters.AddWithValue("@id", alumno.Dni);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        public void EliminarAlumno(int id)
+        {
+            try
+            {
+                connection.Open();
+
+                string query = @"DELETE FROM ALUMNOS WHERE dni = @id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id",id);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Alumno eliminado correctamente!");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         #endregion
 
         #region TABLA ALUMNOS MATERIAS
